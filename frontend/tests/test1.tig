@@ -1,0 +1,8 @@
+/* Array test */
+main let
+	var x: array[100] of int;
+	var a: int;
+in begin
+	a := 10;
+	x[0] := a + 100;
+end

@@ -1,0 +1,12 @@
+/* Different type assign */
+main let
+	var x: float := 1.23;
+	var b: int;
+	function f(d : float) : float begin
+		d := d + 1.0;
+		return d;
+	end;
+in begin
+	x := f(2.0);
+	b := x;
+end

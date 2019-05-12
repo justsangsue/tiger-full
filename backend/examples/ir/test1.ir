@@ -1,0 +1,23 @@
+#start_function main
+void main():
+int-list: i0, X[100], Y[100], $t0, $t1, $t2, sum0, $t3,
+float-list:
+    assign, Y, 100, 10
+    assign, X, 100, 10
+    assign, sum0, 0,
+    assign, i0, 0,
+main:
+    assign, i0, 0,
+loop_label0:
+    brgt, i0, 99, loop_label1
+    array_load, $t0, X, i0
+    array_load, $t1, Y, i0
+    mult, $t0, $t1, $t2
+    add, sum0, $t2, $t3
+    assign, sum0, $t3,
+    add, i0, 1, i0
+    goto, loop_label0, ,
+loop_label1:
+    call, printi, sum0
+    return, , ,
+#end_function main

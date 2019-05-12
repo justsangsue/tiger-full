@@ -1,0 +1,9 @@
+/* Test operands v2 */
+main let
+	var v: int := 1;
+	var s: int := 2;
+	var r: int := 10;
+	var u: int;
+in begin
+	u := 1 + 2 * 3;
+end

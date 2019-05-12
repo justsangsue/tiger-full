@@ -1,0 +1,11 @@
+/* Test different scopes */
+main let
+	var n: int := 0;
+in begin 
+	let 
+		var x: int := 1;
+	in 
+		x := x + 1;
+	end;
+	x := 10;
+end

@@ -1,0 +1,13 @@
+/* Test operands order */
+main let
+	var v: int := 1;
+	var s: int := 2;
+	var r: int := 10;
+	var u: int;
+in begin
+	if v + r * s > s then
+		u := 10;
+	else
+		u := 100;
+	endif;
+end

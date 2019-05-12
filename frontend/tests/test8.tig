@@ -1,0 +1,6 @@
+/* Test scanner */
+main let
+	var a: int;
+in begin
+	f ^ 2 := a;
+end

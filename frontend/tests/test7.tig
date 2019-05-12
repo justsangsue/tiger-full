@@ -1,0 +1,15 @@
+/* Define a recursive function */
+
+main let
+	function fact(n: int): int begin
+		if n==0 then 
+			return 1;
+		else 
+			return res := n * fact(n - 1);
+		endif;
+	end;
+in begin
+	res := fact(10)
+end
+
+/* Current Tiger does not support "id * func()" */

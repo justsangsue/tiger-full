@@ -1,0 +1,17 @@
+#start_function print
+void print(float n):
+int-list:
+float-list: n
+print:
+    call, printi, n
+    return, , ,
+#end_function print
+
+#start_function main
+void main():
+int-list:
+float-list:
+main:
+    call, print, 99.9
+    return, , ,
+#end_function main

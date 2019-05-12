@@ -1,0 +1,15 @@
+/* Test while loop */
+main let
+	var x: int;
+	function sum(n : int) : int begin
+		let var a: int; in 
+			a := 0;
+			while a < n do
+				a := a + 1;
+			enddo;
+			return a;
+		end;
+	end;
+in begin
+	x := sum(10);
+end

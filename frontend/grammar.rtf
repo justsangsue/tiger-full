@@ -1,0 +1,180 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf200
+{\fonttbl\f0\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red205\green205\blue205;\red127\green127\blue127;
+\red0\green0\blue0;}
+{\*\expandedcolortbl;;\csgray\c0\c0;\csgray\c84070;\cssrgb\c57046\c57047\c57046;
+\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww13440\viewh13780\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \cb2 <tiger-program> -> main let <declaration-segment> in begin <stat-seq> end \
+\
+\
+<declaration-segment> -> <type-declaration-list> <var-declaration-list> <function-declaration-list>\
+\
+\
+<type-declaration-list> -> NULL\
+			      	| <type-declaration> <type-declaration-list>\
+\
+\
+<var-declaration-list> -> NULL\
+			    	    | <var-declaration> <var-declaration-list>\
+	\
+\
+<function-declaration-list> -> NULL\
+                             | <function-declaration> <function-declaration-list>\
+\
+\
+<type-declaration> -> type id = <type>; \
+<type> -> <type-id>\
+	   | array [INTLIT] of <type-id> \
+	   | id\
+<type-id> -> int\
+	      | float\
+\
+\
+<var-declaration> -> var <id-list> : <type> <optional-init>; \
+<id-list> -> id\
+           | id, <id-list>\
+<optional-init> -> NULL\
+                 | := <const>\
+\
+\
+<function-declaration> -> function id (<param-list>) <ret-type> begin <state-seq> end; \
+<param-list> -> NULL\
+		    | <param> <param-list-tail>\
+<param-list-tail> -> NULL\
+		         | , <param> <param-list-tail>\
+\
+\
+<ret-type> -> NULL \
+	       | : <type> \
+<param> -> id : <type>\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf3 /**\
+ * <stat-seq> -> <stat> <stat-seq>\
+ *             | <stat> \
+ */\cf0 \
+<stat-seq> -> <stat> <stat-seq'>\
+<stat-seq'> -> <stat-seq>\
+     	   | NULL\
+\
+\cf3 /**\
+ * <stat> -> if <expr> then <stat-seq> endif;\
+ *         | if <expr> then <stat-seq> else <stat-seq> endif; \
+ *         | while <expr> do <stat-seq> enddo;\
+ *	      | for id := <expr> to <expr> do <stat-seq> enddo; \
+ *  		 | <opt-prefix> id(<expr-list>);\
+ */\cf0 \
+<stat> -> < lvalue > < l-tail > := <expr>;\
+	   | if <expr> then <stat-seq> <stat'>\
+	   | while <expr> do <stat-seq> enddo;\
+	   | for id := <expr> to <expr> do <stat-seq> enddo; \
+	   | <opt-prefix> id(<expr-list>);\
+	   | break;\
+	   | return <expr>; \
+        | let <declaration-segment> in <stat-seq> end;\
+<stat'> -> endif;\
+	    | else <stat-seq> endif; \
+<l-tail> -> := <lvalue> <l-tail>\
+          | NULL\
+<opt-prefix> -> <lvalue> :=\
+              | NULL\
+\
+\cf3 /**\
+ * Grammar with left recursion:\
+ * <expr> -> <expr> <andorop> <log>\
+ *        | <lvalue>\
+ *	     | <const> \
+ *	     | <log> \
+ */\cf4 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 <expr> -> <lvalue> <expr'>\
+        | <const> <expr'>\
+	   | <log> <expr'>\
+<expr'> -> <andorop> <log> <expr'>\
+	   | NULL\
+<andorop> -> |\
+	      | &\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf3 \
+/**\
+ *<comp> -> <comp> <eqop> <add> \
+ *        | <add>\
+ *        | <const>\
+ *		| <lvalue>\
+ */\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf5 \cb2 <comp> -> <add> <comp'>\
+        | <const> <comp'>\
+	   | <lvalue> <comp'>\
+<comp'> -> <compop> <add> <comp'>\
+        | NULL\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \cb2 <compop> -> == \
+        | !=\
+	   | < \
+        | > \
+        | <= \
+        | >=\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf3 /**\
+ * <add> -> <add> <addop> <mul> \
+ *        | <mul>\
+ *  		| <const>\
+ *		| <lvalue>\
+ */\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 <add> -> <mul> <add'>\
+    	  | <const> <add'>\
+	  | <lvalue> <add'>\
+<add'> -> <addop> <mul> <add'>\
+	   | NULL\
+<addop> -> + \
+         | -\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf3 /**\
+ * <mul> -> <mul> <mulop> <exp> \
+ *        | <exp>\
+ * 		| <const>\
+ * 		| <lvalue>\
+ */\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 <mul> -> <exp> <mul'>\
+	  | <const> <mul'>\
+	  | <lvalue> <mul'>\
+<mul'> -> <mulop> <exp> <mul'>\
+	  | NULL\
+<mulop> -> * \
+         | /\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf3 /**\
+ * <exp> -> <exp> <expop> <paren> \
+ *              | <paren>\
+ */\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 <exp> -> <paren> <exp'>\
+	  | <const> <exp'>\
+	  | <lvalue> <exp'>\
+<exp'> -> <expop> <paren> <exp'> \
+	  | NULL\
+<expop> -> **\
+<paren> -> (<expr>)\
+	    | <const>\
+	    | <lvalue> \
+\
+<const> -> INTLIT\
+         | FLOATLIT \
+\
+\
+<expr-list> -> NULL\
+             | <expr> <expr-list-tail> \
+<expr-list-tail> -> , <expr> <expr-list-tail> \
+                  | NULL\
+<lvalue> -> id <lvalue-tail>\
+<lvalue-tail> -> [ <expr> ]\
+               | NULL}

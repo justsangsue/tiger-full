@@ -1,0 +1,13 @@
+/* Basic value assign */
+main let
+	type t = int;
+
+	//var myint: int := 1;
+
+	//function id (id: int): int 
+	//	begin id := 3; 
+	//end;
+	
+in begin 
+	i := 10;
+end

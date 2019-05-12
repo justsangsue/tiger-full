@@ -1,0 +1,7 @@
+/* Test float type */
+main let
+	var f: float := 12.34;
+	var x: float;
+in begin
+	x := f;
+end
